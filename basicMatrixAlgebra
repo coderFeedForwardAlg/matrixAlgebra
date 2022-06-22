@@ -1,0 +1,82 @@
+/********** matrix math ***********/ 
+public class Solution{
+	public static void main(String[] args){
+		double[][] matA = {{1,2,3},{4,5,6},{7,8,9}};
+		double[][] matB =  {{1,2,3},{4,5,6},{7,8,9}};
+		double[][] x = moltipyMat(matA, matB);
+		for(int i = 0; i < x.length; i ++){
+			for(int j = 0; j < x.length; j++){
+				System.out.print(x[i][j]);
+				System.out.println(",");
+			}System.out.println();
+		}
+	}
+/*calc determinant */ 
+	public static double getDeterminant(double[][] mat){
+		double determinant = 0;
+		if(mat.length != 2){
+			for(int i = 0; i < mat.length; i++){
+				if(i % 2 == 0){
+					determinant += 
+mat[0][i] * getDeterminant(smallerMat(mat,0, i));
+				}else{
+					determinant -= 
+mat[0][i] * getDeterminant(smallerMat(mat,0, i));
+				}
+			}
+		}else{
+				// base case 
+			determinant = (mat[0][0] * mat[1][1]) - (mat[0][1] * mat[1][0]);
+		}
+            	return determinant;
+	}
+	public static double[][] smallerMat(double[][] mat, int rowX, int colX){
+	double[][] newMat = new double[mat.length - 1][mat.length - 1];
+	
+	int newRow = 0;
+for(int row = 0; row < mat.length; row++){
+int newCol = 0;
+for(int col = 0; col < mat.length; col++){
+	if(col != colX && row != rowX){
+		newMat[newRow][newCol] = mat[row][col];
+		newCol++;
+		}
+}
+if(row != rowX){
+newRow++;
+}
+} 
+return newMat; 
+	}
+	public static double[][] coFactor(double[][] mat){
+		double[][] newMat = new double[mat.length][mat[0].length];
+		for(int row = 0; row < mat.length; row++){
+			for(int col = 0; col < mat[0].length; col++){
+				
+				if( (col%2 ==0 && row%2 == 0) || (col%2!=0 && row%2 != 0) ) {
+	newMat[row][col] = 
+getDeterminant(smallerMat(mat, row, col)); 
+}else{
+newMat[row][col] =
+ getDeterminant(smallerMat(mat, row, col)) * -1;
+}
+			}
+		}
+			// apply checkerdbord 
+		return newMat;
+	}
+	public static double[][] moltipyMat(double[][] matA, double[][] matB){
+		double [][] newMat = new double[matA.length][matB[0].length];
+		for(int row = 0; row < matA.length; row++){
+			for(int col = 0; col < matB[0].length; col++){
+					// sum up the product of As rows and Bs cols
+				int count = 0;
+				for(int i = 0; i < matA[0].length; i++){
+					count += matA[row][i] * matB[i][col];
+				}
+				newMat[row][col] = count;
+			}
+		}
+		return newMat;
+	}
+}
