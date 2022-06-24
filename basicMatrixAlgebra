@@ -30,6 +30,7 @@ mat[0][i] * getDeterminant(smallerMat(mat,0, i));
 		}
             	return determinant;
 	}
+
 	public static double[][] smallerMat(double[][] mat, int rowX, int colX){
 	double[][] newMat = new double[mat.length - 1][mat.length - 1];
 	
@@ -48,6 +49,7 @@ newRow++;
 } 
 return newMat; 
 	}
+
 	public static double[][] coFactor(double[][] mat){
 		double[][] newMat = new double[mat.length][mat[0].length];
 		for(int row = 0; row < mat.length; row++){
@@ -65,8 +67,18 @@ newMat[row][col] =
 			// apply checkerdbord 
 		return newMat;
 	}
+
+	public static double[][] diagFlip(double[][] mat){
+		double[][] newMat = new double[mat.length][mat[0].length];
+		for(int row = 0; row < mat.length; row++){
+			for(int col = 0; col < mat[0].length; col++){
+				newMat[row][col] = mat[col][row]; 
+			}
+		}
+	}
+
 	public static double[][] moltipyMat(double[][] matA, double[][] matB){
-		double [][] newMat = new double[matA.length][matB[0].length];
+		double [][] newMat = new double[matA[0].length][matB.length];
 		for(int row = 0; row < matA.length; row++){
 			for(int col = 0; col < matB[0].length; col++){
 					// sum up the product of As rows and Bs cols
@@ -75,8 +87,10 @@ newMat[row][col] =
 					count += matA[row][i] * matB[i][col];
 				}
 				newMat[row][col] = count;
+				newMat[row][col] = matA[row][col];
 			}
 		}
 		return newMat;
 	}
 }
+
